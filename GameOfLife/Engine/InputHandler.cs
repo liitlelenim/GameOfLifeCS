@@ -1,6 +1,6 @@
 ﻿using Raylib_cs;
 
-namespace GameOfLife;
+namespace GameOfLife.Engine;
 
 public class InputHandler
 {

@@ -1,4 +1,5 @@
 ﻿using GameOfLife;
+using GameOfLife.Engine;
 using Raylib_cs;
 
 InputHandler inputHandler = new();

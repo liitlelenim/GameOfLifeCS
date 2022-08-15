@@ -1,4 +1,4 @@
-﻿namespace GameOfLife;
+﻿namespace GameOfLife.Engine;
 
 public interface ITickable
 {
