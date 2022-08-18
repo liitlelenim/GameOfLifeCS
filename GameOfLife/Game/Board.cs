@@ -13,8 +13,22 @@ public class Board : IDrawable
 
     private bool[,] _cells = new bool[_chachedBoardSize, _chachedBoardSize];
 
+
     public void Draw()
     {
+        for (int x = 0; x < _chachedBoardSize; x++)
+        {
+            for (int y = 0; y < _chachedBoardSize; y++)
+            {
+                if (_cells[x, y] == true)
+                {
+                    Vec2 _cellPosition = CoordsToPosition(x, y);
+                    Raylib.DrawRectangle(_cellPosition.X, _cellPosition.Y, _cachedCellSize, _cachedCellSize,
+                        Color.WHITE);
+                }
+            }
+        }
+
         for (int i = 0; i <= _chachedBoardSize; i++)
         {
             //Vertical Line
@@ -28,7 +42,6 @@ public class Board : IDrawable
             Raylib.DrawLine(lineStartHorizontal.X, lineStartHorizontal.Y, lineEndHorizontal.X, lineEndHorizontal.Y,
                 Color.WHITE);
         }
-        
     }
 
     public Vec2 CoordsToPosition(int x, int y) =>
