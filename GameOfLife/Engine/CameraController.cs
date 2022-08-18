@@ -54,5 +54,7 @@ public class CameraController : ITickable
         _camera.zoom += GameSettings.CameraZoomSpeed * _inputHandler.MouseWheelDelta * deltaTime;
         _camera.zoom = Math.Clamp(_camera.zoom, GameSettings.CameraMinZoom, GameSettings.CameraMaxZoom);
         _camera.target = _cameraPosition;
+
+        _inputHandler.Camera = Camera;
     }
 }

@@ -11,8 +11,9 @@ CameraController cameraController = new(inputHandler);
 
 tickables.Add(cameraController);
 
-Board board = new Board();
+Board board = new Board(inputHandler);
 drawables.Add(board);
+tickables.Add(board);
 
 Raylib.InitWindow(GameSettings.InitialWindowWidth, GameSettings.InitialWindowHeight, GameSettings.WindowTitle);
 Raylib.SetTargetFPS(60);
