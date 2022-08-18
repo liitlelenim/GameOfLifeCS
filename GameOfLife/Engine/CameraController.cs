@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using GameOfLife.Game;
 using Raylib_cs;
 
 namespace GameOfLife.Engine;
@@ -18,7 +19,10 @@ public class CameraController : ITickable
         _camera = new Camera2D();
         _camera.zoom = 1f;
         _inputHandler = inputHandler;
-        _cameraPosition = Vector2.Zero;
+        Vector2 boardMiddle = new Vector2(
+            -GameSettings.CellSize * GameSettings.BoardSize - GameSettings.StartingCameraXOffset,
+            -GameSettings.CellSize * GameSettings.BoardSize);
+        _cameraPosition = boardMiddle;
         _camera.target = _cameraPosition;
     }
 

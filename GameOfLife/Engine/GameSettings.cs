@@ -13,4 +13,6 @@ public static class GameSettings
 
     public const int BoardSize = 30;
     public const int CellSize = 20;
+
+    public const int StartingCameraXOffset = 100;
 }
