@@ -16,13 +16,15 @@ public class InputHandler
     public bool IsAKeyBeingPressed { get; private set; } = false;
     public bool IsDKeyBeingPressed { get; private set; } = false;
 
+    public bool IsSpaceBeingClicked { get; private set; } = false;
+
     public Camera2D Camera { private get; set; }
 
     public void CheckForInputs()
     {
         IsMouseLeftButtonClicked = Raylib.IsMouseButtonPressed(MouseButton.MOUSE_LEFT_BUTTON);
         IsMouseRightButtonClicked = Raylib.IsMouseButtonPressed(MouseButton.MOUSE_RIGHT_BUTTON);
-
+        IsSpaceBeingClicked = Raylib.IsKeyPressed(KeyboardKey.KEY_SPACE);
         Vector2 tempMousePosition = Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), Camera);
         MousePositionInWorld = new Vec2((int)tempMousePosition.X, (int)tempMousePosition.Y);
 

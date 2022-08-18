@@ -12,6 +12,9 @@ public class Board : IDrawable, ITickable
     private const int _boundary = _cachedCellSize * _chachedBoardSize;
     private InputHandler _input;
 
+    private float _gameTickTimer = 0.0f;
+    private bool _isGameRunning = false;
+
     private bool[,] _cells = new bool[_chachedBoardSize, _chachedBoardSize];
 
     public Board(InputHandler inputHandler)
@@ -58,6 +61,17 @@ public class Board : IDrawable, ITickable
 
     public void Tick(float deltaTime)
     {
+        if (_isGameRunning)
+        {
+            _gameTickTimer += deltaTime;
+        }
+
+        if (_gameTickTimer >= GameSettings.GameTicKDuration)
+        {
+            GameOfLifeTick();
+            _gameTickTimer = 0;
+        }
+
         if (_input.IsMouseLeftButtonClicked)
         {
             Vec2 cords = PositionToCords(_input.MousePositionInWorld);
@@ -67,10 +81,93 @@ public class Board : IDrawable, ITickable
                 ToggleCell(cords);
             }
         }
+
+        if (_input.IsSpaceBeingClicked)
+        {
+            _isGameRunning = !_isGameRunning;
+        }
+    }
+
+    public void GameOfLifeTick()
+    {
+        bool[,] nextGeneration = new bool[_chachedBoardSize, _chachedBoardSize];
+        for (int x = 0; x < _chachedBoardSize; x++)
+        {
+            for (int y = 0; y < _chachedBoardSize; y++)
+            {
+                int neighboursCount = GetNeighboursCount(x, y);
+                if (_cells[x, y] == true)
+                {
+                    if (neighboursCount == 2 || neighboursCount == 3)
+                    {
+                        nextGeneration[x, y] = true;
+                    }
+                }
+                else
+                {
+                    if (neighboursCount == 3)
+                    {
+                        nextGeneration[x, y] = true;
+                    }
+                }
+            }
+        }
+
+        _cells = nextGeneration;
+    }
+
+    private int GetNeighboursCount(int x, int y)
+    {
+        int count = 0;
+        if (x > 0 && _cells[x - 1, y])
+        {
+            count++;
+        }
+
+        if (x > 0 && y > 0 && _cells[x - 1, y - 1])
+        {
+            count++;
+        }
+
+        if (x > 0 && y < _chachedBoardSize-1 && _cells[x - 1, y + 1])
+        {
+            count++;
+        }
+
+        if (x < _chachedBoardSize-1 && _cells[x + 1, y])
+        {
+            count++;
+        }
+
+        if (x < _chachedBoardSize-1 && y > 0 && _cells[x + 1, y - 1])
+        {
+            count++;
+        }
+
+        if ((x < _chachedBoardSize-1 && y < _chachedBoardSize-1) && _cells[x + 1, y + 1])
+        {
+            count++;
+        }
+
+        if (y > 0 && _cells[x, y - 1])
+        {
+            count++;
+        }
+
+        if (y < _chachedBoardSize-1 && _cells[x, y + 1])
+        {
+            count++;
+        }
+
+
+        return count;
     }
 
     private void ToggleCell(Vec2 cords)
     {
-        _cells[cords.X, cords.Y] = !_cells[cords.X, cords.Y];
+        if (!_isGameRunning)
+        {
+            _cells[cords.X, cords.Y] = !_cells[cords.X, cords.Y];
+        }
     }
 }

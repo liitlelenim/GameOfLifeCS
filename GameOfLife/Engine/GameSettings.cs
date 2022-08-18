@@ -1,4 +1,4 @@
-﻿namespace GameOfLife;
+﻿namespace GameOfLife.Engine;
 
 public static class GameSettings
 {
@@ -10,9 +10,10 @@ public static class GameSettings
     public static float CameraZoomSpeed = 2F;
     public static float CameraMinZoom = 0.1f;
     public static float CameraMaxZoom = 5f;
+    public const int StartingCameraXOffset = 100;
 
     public const int BoardSize = 30;
     public const int CellSize = 20;
 
-    public const int StartingCameraXOffset = 100;
+    public static float GameTicKDuration = 0.5f;
 }
